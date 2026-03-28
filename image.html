@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Image Generator</title>
 
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+margin:0;
+}
+
+nav{
+background:#020617;
+padding:15px;
+}
+
+nav a{
+color:white;
+margin:15px;
+text-decoration:none;
+font-size:18px;
+}
+
+.container{
+padding:40px;
+}
+
+input{
+width:60%;
+padding:12px;
+border-radius:6px;
+border:none;
+}
+
+button{
+padding:12px 20px;
+background:#22c55e;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+img{
+margin-top:30px;
+max-width:90%;
+border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="chat.html">AI Chat</a>
+<a href="image.html">Image AI</a>
+</nav>
+
+<div class="container">
+
+<h1>AI Image Generator</h1>
+
+<p>Describe the image you want</p>
+
+<input id="prompt" placeholder="A futuristic city at sunset">
+
+<button onclick="generate()">Generate</button>
+
+<br>
+
+<img id="result">
+
+</div>
+
+<script>
+
+function generate(){
+
+let prompt = document.getElementById("prompt").value;
+
+let url = "https://image.pollinations.ai/prompt/" + prompt;
+
+document.getElementById("result").src = url;
+
+}
+
+</script>
+
+</body>
+</html>
