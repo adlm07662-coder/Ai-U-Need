@@ -14,20 +14,26 @@ border-radius:12px 12px 12px 0;
 width:60px;
 }
 
+.typing{
+display:flex;
+gap:4px;
+}
+
 .typing span{
 width:6px;
 height:6px;
 background:white;
 border-radius:50%;
-animation:blink 1.4s infinite;
+animation:blink 1s infinite;
 }
 
-.typing span:nth-child(2){
-animation-delay:0.2s;
-}
+.typing span:nth-child(2){animation-delay:0.2s}
+.typing span:nth-child(3){animation-delay:0.4s}
 
-.typing span:nth-child(3){
-animation-delay:0.4s;
+@keyframes blink{
+0%{opacity:0.2}
+50%{opacity:1}
+100%{opacity:0.2}
 }
 
 @keyframes blink{
@@ -75,7 +81,13 @@ border-radius:12px 12px 12px 0;
 max-width:70%;
 align-self:flex-start;
 }
-
+.time{
+font-size:10px;
+opacity:0.6;
+margin-left:8px;
+display:block;
+margin-top:3px;
+}
 .input-area{
 display:flex;
 position:fixed;
@@ -229,7 +241,6 @@ animation:blink 1s infinite;
 🚀 Send
 </button>
 </div>
-
 <script>
 
 let inputBox = document.getElementById("input")
@@ -248,19 +259,22 @@ let chat = document.getElementById("chat")
 if(input === "") return
 
 // show user message
-chat.innerHTML += "<div class='user'>"+input+"</div>"
+let time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
+chat.innerHTML += "<div class='user'>"+input+" <span class='time'>"+time+"</span></div>"
 inputBox.value=""
 
 // typing indicator
 chat.innerHTML += `
-<div class="typing" id="typing">
+<div class='ai typing'>
 <span></span>
 <span></span>
 <span></span>
 </div>
 `
-chat.scrollTop = chat.scrollHeight
-
+chat.scrollTo({
+  top: chat.scrollHeight,
+  behavior: "smooth"
+})
 try{
 
 let response = await fetch("https://python-playground--adlm07662.replit.app/chat", {
@@ -314,10 +328,14 @@ let i = 0
 
 let typing = setInterval(function(){
 
-bubble.innerHTML += text.charAt(i)
+let time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
+bubble.innerHTML = text + " <span class='time'>" + time + "</span>"
 i++
 
-chat.scrollTop = chat.scrollHeight
+chat.scrollTo({
+  top: chat.scrollHeight,
+  behavior: "smooth"
+})
 
 if(i >= text.length){
 clearInterval(typing)
