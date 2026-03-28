@@ -88,34 +88,38 @@ AI-U-Need Chat
   
 
 <script>
- async function sendMessage(){
-let input = document.getElementById("input").value;
-let chat = document.getElementById("chat");
+async function sendMessage(){
+  let input = document.getElementById("input").value;
+  let chat = document.getElementById("chat");
 
-chat.innerHTML += "<div class='user'>"+input+"</div>";
+  if(input === "") return;
 
-let response = await fetch("https://api.affiliateplus.xyz/api/chatbot",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-message:input,
-botname:"AI-U-Need",
-ownername:"Mohammed"
-})
-});
+  chat.innerHTML += "<div class='user'>" + input + "</div>";
 
-let data = await response.json();
+  try {
+    let response = await fetch("https://api.affiliateplus.xyz/api/chatbot", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: input,
+        botname: "AI-U-Need",
+        ownername: "Mohammed"
+      })
+    });
 
-chat.innerHTML += "<div class='ai'>"+data.message+"</div>";
+    let data = await response.json();
 
-document.getElementById("input").value="";
+    chat.innerHTML += "<div class='ai'>" + data.message + "</div>";
 
+  } catch (error) {
+    chat.innerHTML += "<div class='ai'>Error: API not working</div>";
+  }
+
+  document.getElementById("input").value = "";
 }
-
 </script>
 
 </body>
-
 </html>
