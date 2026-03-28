@@ -115,30 +115,6 @@ document.getElementById("input").value="";
 }
 
 </script>
-let input=document.getElementById("input");
-let chat=document.getElementById("chat");
-
-let userText=input.value;
-
-if(userText=="") return;
-
-chat.innerHTML += `<div class="message user">${userText}</div>`;
-
-let aiReply="AI is thinking about: "+userText;
-
-setTimeout(()=>{
-
-chat.innerHTML += `<div class="message ai">${aiReply}</div>`;
-
-chat.scrollTop=chat.scrollHeight;
-
-},700);
-
-input.value="";
-
-}
-
-</script>
 
 </body>
 
