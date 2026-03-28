@@ -243,8 +243,13 @@ animation:blink 1s infinite;
 </div>
 <script>
 
-let inputBox = document.getElementById("input")
-
+// LOAD CHAT HISTORY
+window.onload = function(){
+let saved = localStorage.getItem("ai-chat")
+if(saved){
+document.getElementById("chat").innerHTML = saved
+}
+}
 inputBox.addEventListener("keydown", function(e){
 if(e.key === "Enter"){
 sendMessage()
@@ -262,8 +267,10 @@ if(input === "") return
 let time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
 chat.innerHTML += "<div class='user'>"+input+" <span class='time'>"+time+"</span></div>"
 inputBox.value=""
+localStorage.setItem("ai-chat", chat.innerHTML)
+  localStorage.setItem("ai-chat", chat.innerHTML)
 
-// typing indicator
+  // typing indicator
 chat.innerHTML += `
 <div class='ai typing'>
 <span></span>
@@ -358,8 +365,10 @@ let i = 0
 
 let typing = setInterval(function(){
 
-bubble.innerHTML += text.charAt(i)
-
+bubble.innerHTML = text.substring(0,i)
+bubble.innerHTML += 
+"<br><button onclick='copyText(this)'>📋 Copy</button>"
+  
 i++
 
 chat.scrollTop = chat.scrollHeight
@@ -372,7 +381,20 @@ clearInterval(typing)
 
 }
 }
+function copyText(btn){
 
+let text = btn.parentElement.innerText
+
+navigator.clipboard.writeText(text)
+
+btn.innerHTML = "✅ Copied"
+
+setTimeout(()=>{
+btn.innerHTML = "📋 Copy"
+},1500)
+
+}
+  
 </script>
 
 </body>
