@@ -184,7 +184,18 @@ box-shadow:0 4px 15px rgba(0,0,0,0.4);
 .user,.ai{
 animation:fadeUp 0.3s ease;
 }
+@keyframes fadeUp{
+0%{
+opacity:0;
+transform:translateY(10px);
+}
 
+100%{
+opacity:1;
+transform:translateY(0);
+}
+}
+  
 @keyframes fadeUp{
 from{
 opacity:0;
@@ -442,6 +453,29 @@ btn.innerHTML = "📋 Copy"
 },1500)
 
 }
+async function askAI(message){
+
+let response = await fetch("https://api.openai.com/v1/chat/completions",{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer YOUR_API_KEY"
+},
+body:JSON.stringify({
+model:"gpt-4o-mini",
+messages:[
+{role:"user",content:message}
+]
+})
+})
+
+let data = await response.json()
+
+return data.choices[0].message.content
+}
+let reply = await askAI(input)
+
+streamText(reply)
   
 </script>
 
