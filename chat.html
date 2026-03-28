@@ -294,7 +294,7 @@ let typing = document.getElementById("typing")
 if(typing) typing.remove()
 
 // IMPORTANT FIX 👇
-typeText(data.response)
+streamText(data.response)
 
 }catch{
 
@@ -343,6 +343,34 @@ clearInterval(typing)
 
 },20)
 
+}
+
+function streamText(text){
+
+let chat = document.getElementById("chat")
+
+let bubble = document.createElement("div")
+bubble.className = "ai"
+
+chat.appendChild(bubble)
+
+let i = 0
+
+let typing = setInterval(function(){
+
+bubble.innerHTML += text.charAt(i)
+
+i++
+
+chat.scrollTop = chat.scrollHeight
+
+if(i >= text.length){
+clearInterval(typing)
+}
+
+}, 20)
+
+}
 }
 
 </script>
