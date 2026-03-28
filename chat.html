@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <title>AI-U-Need Chat</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial;
@@ -58,9 +60,10 @@ background:#22c55e;
 border:none;
 color:white;
 font-size:16px;
+cursor:pointer;
 }
-</style>
 
+</style>
 </head>
 
 <body>
@@ -92,20 +95,20 @@ document.getElementById("input").value = "";
 try{
 
 let response = await fetch(
-"https://api.affiliateplus.xyz/api/chatbot?message="
-+ encodeURIComponent(input) +
-"&botname=AI-U-Need&ownername=Mohammed"
+"https://api.popcat.xyz/chatbot?msg=" +
+encodeURIComponent(input) +
+"&owner=Mohammed&botname=AI-U-Need"
 );
 
 let data = await response.json();
 
-chat.innerHTML += "<div class='ai'>" + data.message + "</div>";
+chat.innerHTML += "<div class='ai'>" + data.response + "</div>";
 
 chat.scrollTop = chat.scrollHeight;
 
 }catch(error){
 
-chat.innerHTML += "<div class='ai'>Error: AI server not responding</div>";
+chat.innerHTML += "<div class='ai'>AI server offline</div>";
 
 }
 
