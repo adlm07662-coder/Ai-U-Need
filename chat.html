@@ -5,7 +5,37 @@
 <title>AI-U-Need Chat</title>
 
 <style>
-body{
+.typing{
+display:flex;
+gap:5px;
+padding:10px 14px;
+background:#1e2a38;
+border-radius:12px 12px 12px 0;
+width:60px;
+}
+
+.typing span{
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+animation:blink 1.4s infinite;
+}
+
+.typing span:nth-child(2){
+animation-delay:0.2s;
+}
+
+.typing span:nth-child(3){
+animation-delay:0.4s;
+}
+
+@keyframes blink{
+0%{opacity:0.2}
+50%{opacity:1}
+100%{opacity:0.2}
+}
+  body{
 margin:0;
 font-family:Arial;
 background:#0b1a2b;
@@ -222,7 +252,13 @@ chat.innerHTML += "<div class='user'>"+input+"</div>"
 inputBox.value=""
 
 // typing indicator
-chat.innerHTML += "<div class='ai' id='typing'>AI is typing...</div>"
+chat.innerHTML += `
+<div class="typing" id="typing">
+<span></span>
+<span></span>
+<span></span>
+</div>
+`
 chat.scrollTop = chat.scrollHeight
 
 try{
