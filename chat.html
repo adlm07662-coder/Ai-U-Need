@@ -1,1 +1,119 @@
 
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>AI Chat</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+margin:0;
+}
+
+.header{
+background:#020617;
+padding:15px;
+text-align:center;
+font-size:22px;
+}
+
+.chatbox{
+height:70vh;
+overflow:auto;
+padding:20px;
+}
+
+.message{
+margin:10px 0;
+padding:10px;
+border-radius:8px;
+max-width:70%;
+}
+
+.user{
+background:#2563eb;
+margin-left:auto;
+}
+
+.ai{
+background:#1e293b;
+}
+
+.input-area{
+position:fixed;
+bottom:0;
+width:100%;
+display:flex;
+}
+
+input{
+flex:1;
+padding:15px;
+border:none;
+font-size:16px;
+}
+
+button{
+padding:15px;
+background:#22c55e;
+border:none;
+color:white;
+font-size:16px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+AI-U-Need Chat
+</div>
+
+<div id="chat" class="chatbox"></div>
+
+<div class="input-area">
+
+<input id="input" placeholder="Ask AI anything...">
+
+<button onclick="send()">Send</button>
+
+</div>
+
+<script>
+
+function send(){
+
+let input=document.getElementById("input");
+let chat=document.getElementById("chat");
+
+let userText=input.value;
+
+if(userText=="") return;
+
+chat.innerHTML += `<div class="message user">${userText}</div>`;
+
+let aiReply="AI is thinking about: "+userText;
+
+setTimeout(()=>{
+
+chat.innerHTML += `<div class="message ai">${aiReply}</div>`;
+
+chat.scrollTop=chat.scrollHeight;
+
+},700);
+
+input.value="";
+
+}
+
+</script>
+
+</body>
+
+</html>
