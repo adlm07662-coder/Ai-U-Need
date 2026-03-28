@@ -315,7 +315,17 @@ sendMessage()
 }
 })
 
-async function sendMessage(){
+// typing indicator
+chat.innerHTML += "<div class='ai'>Typing...</div>"
+
+// get AI response
+let reply = await askAI(input)
+
+// remove typing
+chat.lastChild.remove()
+
+// show AI message
+streamText(reply)
 
 let input = inputBox.value
 let chat = document.getElementById("chat")
@@ -459,7 +469,7 @@ let response = await fetch("https://api.openai.com/v1/chat/completions",{
 method:"POST",
 headers:{
 "Content-Type":"application/json",
-"Authorization":"Bearer YOUR_API_KEY"
+"Authorization":"Bearer sk-xxxxx"
 },
 body:JSON.stringify({
 model:"gpt-4o-mini",
@@ -472,6 +482,7 @@ messages:[
 let data = await response.json()
 
 return data.choices[0].message.content
+
 }
 let reply = await askAI(input)
 
