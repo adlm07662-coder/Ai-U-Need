@@ -23,21 +23,32 @@ font-size:20px;
 .chatbox{
 height:80vh;
 overflow-y:auto;
-padding:10px;
+padding:15px;
+display:flex;
+flex-direction:column;
 }
 
 .user{
 background:#2563eb;
 padding:10px;
 margin:5px 0;
-border-radius:5px;
+border-radius:8px;
+align-self:flex-end;
+max-width:70%;
 }
 
 .ai{
 background:#1c293b;
 padding:10px;
 margin:5px 0;
-border-radius:5px;
+border-radius:8px;
+align-self:flex-start;
+max-width:70%;
+}
+
+.typing{
+font-style:italic;
+opacity:0.7;
 }
 
 .input-area{
@@ -45,6 +56,7 @@ position:fixed;
 bottom:0;
 width:100%;
 display:flex;
+background:#050a1f;
 }
 
 input{
@@ -52,6 +64,7 @@ flex:1;
 padding:15px;
 border:none;
 font-size:16px;
+outline:none;
 }
 
 button{
@@ -81,40 +94,82 @@ AI-U-Need Chat
 
 <script>
 
+let inputBox = document.getElementById("input")
+
+inputBox.addEventListener("keypress",function(e){
+if(e.key==="Enter"){
+sendMessage()
+}
+})
+
 async function sendMessage(){
 
-let input = document.getElementById("input").value;
-let chat = document.getElementById("chat");
+let input = inputBox.value
+let chat = document.getElementById("chat")
 
-if(input === "") return;
+if(input==="") return
 
-chat.innerHTML += "<div class='user'>" + input + "</div>";
+chat.innerHTML += "<div class='user'>"+input+"</div>"
 
-document.getElementById("input").value = "";
+inputBox.value=""
+
+chat.innerHTML += "<div class='ai typing' id='typing'>AI is typing...</div>"
+
+chat.scrollTop = chat.scrollHeight
 
 try{
 
 let response = await fetch(
-"https://api.popcat.xyz/chatbot?msg=" +
-encodeURIComponent(input) +
-"&owner=Mohammed&botname=AI-U-Need"
-);
+"https://api.popcat.xyz/chatbot?msg="
++ encodeURIComponent(input)
++ "&owner=Mohammed&botname=AI-U-Need"
+)
 
-let data = await response.json();
+let data = await response.json()
 
-chat.innerHTML += "<div class='ai'>" + data.response + "</div>";
+document.getElementById("typing").remove()
 
-chat.scrollTop = chat.scrollHeight;
+typeText(data.response)
 
-}catch(error){
+}catch{
 
-chat.innerHTML += "<div class='ai'>AI server offline</div>";
+document.getElementById("typing").remove()
+
+chat.innerHTML += "<div class='ai'>AI server offline</div>"
 
 }
+
+}
+
+function typeText(text){
+
+let chat = document.getElementById("chat")
+
+let bubble = document.createElement("div")
+bubble.className="ai"
+
+chat.appendChild(bubble)
+
+let i=0
+
+let typing = setInterval(function(){
+
+bubble.innerHTML += text.charAt(i)
+
+i++
+
+chat.scrollTop = chat.scrollHeight
+
+if(i>=text.length){
+clearInterval(typing)
+}
+
+},20)
 
 }
 
 </script>
 
 </body>
+
 </html>
