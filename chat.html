@@ -315,19 +315,7 @@ sendMessage()
 }
 })
 
-// typing indicator
-chat.innerHTML += "<div class='ai'>Typing...</div>"
 
-// get AI response
-let reply = await askAI(input)
-
-// remove typing
-chat.lastChild.remove()
-
-// show AI message
-streamText(reply)
-
-let input = inputBox.value
 let chat = document.getElementById("chat")
 
 if(input === "") return
