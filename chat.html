@@ -87,8 +87,36 @@ AI-U-Need Chat
 
 <script>
 
-function send(){
+<script>
 
+async function sendMessage(){
+
+let input = document.getElementById("input").value;
+let chat = document.getElementById("chat");
+
+chat.innerHTML += "<div class='user'>"+input+"</div>";
+
+let response = await fetch("https://api.affiliateplus.xyz/api/chatbot",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:input,
+botname:"AI-U-Need",
+ownername:"Mohammed"
+})
+});
+
+let data = await response.json();
+
+chat.innerHTML += "<div class='ai'>"+data.message+"</div>";
+
+document.getElementById("input").value="";
+
+}
+
+</script>
 let input=document.getElementById("input");
 let chat=document.getElementById("chat");
 
