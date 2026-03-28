@@ -99,8 +99,15 @@ chat.scrollTop = chat.scrollHeight
 
 try{
 
-let response = await fetch("https://python-playground--adlm07662.replit.app/api/chat"
-headers: {
+let response = await fetch("https://python-playground--adlm07662.replit.app/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    message: input
+  })
+});
 "Content-Type": "application/json"
 },
 body: JSON.stringify({
